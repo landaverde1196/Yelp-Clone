@@ -4,7 +4,7 @@ import { RestaurantsContext } from "../context/RestaurantsContext";
 
 const RestaurantList = () => {
   const { restaurants, setRestaurants } = useContext(RestaurantsContext);
-  
+
   useEffect(() => {
     const fetchData = async () => {
       try {
@@ -32,7 +32,24 @@ const RestaurantList = () => {
           </tr>
         </thead>
         <tbody>
-          <tr>
+          {restaurants &&
+            restaurants.map((restaurant) => {
+              return (
+                <tr key={restaurant.id}>
+                  <td>{restaurant.name}</td>
+                  <td>{restaurant.location}</td>
+                  <td>{"$".repeat(restaurant.price_range)}</td>
+                  <td>reviews</td>
+                  <td>
+                    <button className="btn btn-warning">Update</button>
+                  </td>
+                  <td>
+                    <button className="btn btn-danger">Delete</button>
+                  </td>
+                </tr>
+              );
+            })}
+          {/* <tr>
             <td>McDonalds</td>
             <td>New York</td>
             <td>$$</td>
@@ -55,7 +72,7 @@ const RestaurantList = () => {
             <td>
               <button className="btn btn-danger">Delete</button>
             </td>
-          </tr>
+          </tr> */}
         </tbody>
       </table>
     </div>
