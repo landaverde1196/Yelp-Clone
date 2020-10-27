@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+import { useHistory, useParams } from "react-router-dom";
 import RestaurantFinder from "../apis/RestaurantFinder";
 
 const UpdateRestaurant = () => {
@@ -8,6 +8,7 @@ const UpdateRestaurant = () => {
   const [priceRange, setPriceRange] = useState("");
 
   const { id } = useParams();
+  let history = useHistory();
 
   useEffect(() => {
     const fetchData = async () => {
@@ -19,6 +20,17 @@ const UpdateRestaurant = () => {
     };
     fetchData();
   }, [id]);
+
+  const submitHandler = async (e) => {
+    e.preventDefault();
+    const updatedRestaurant = await RestaurantFinder.put(`/${id}`, {
+      name,
+      location,
+      price_range: priceRange,
+    });
+    console.log(updatedRestaurant);
+    history.push("/");
+  };
 
   return (
     <div>
@@ -61,7 +73,11 @@ const UpdateRestaurant = () => {
           </select>
         </div>
 
-        <button className="btn btn-primary" type="submit">
+        <button
+          onClick={submitHandler}
+          className="btn btn-primary"
+          type="submit"
+        >
           Submit
         </button>
       </form>
