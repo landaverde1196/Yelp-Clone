@@ -16,7 +16,7 @@ const RestaurantDetail = (props) => {
       try {
         const response = await RestaurantFinder.get(`/${id}`);
         console.log(response);
-        setSelectedRestaurant(response.data.data.restaurant);
+        setSelectedRestaurant(response.data.data);
       } catch (err) {
         console.log(err);
       }
@@ -29,7 +29,7 @@ const RestaurantDetail = (props) => {
       {selectedRestaurant && (
         <>
           <div className="mt-3">
-            <Reviews />
+            <Reviews reviews={selectedRestaurant.reviews} />
           </div>
           <AddReview />
         </>
