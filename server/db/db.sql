@@ -12,7 +12,6 @@ CREATE TABLE reviews (
 );
 
 -- PSQL aggregate functions  --
-
 -- select as (name)---------------------------------
 select
     count(rating) as rating_count
@@ -50,3 +49,33 @@ select
     trunc(avg(rating), 2) as avg_rating
 from
     reviews;
+
+--- inner Joins  ---------------------------------------------------------
+select
+    *
+from
+    restaurants
+    inner join reviews on restaurants.id = reviews.restaurant_id;
+
+--- inner Joins 2 (left join) ---------------------------------------------------------
+select
+    *
+from
+    restaurants
+    left join reviews on restaurants.id = reviews.restaurant_id;
+
+--- Left join (big query)--------------------------------    
+select
+    *
+from
+    restaurants
+    left join (
+        select
+            restaurant_id,
+            count(*),
+            trunc(avg(rating), 1) as average_rating
+        from
+            reviews
+        group by
+            restaurant_id
+    ) reviews on restaurants.id = reviews.restaurant_id;

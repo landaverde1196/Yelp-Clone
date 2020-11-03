@@ -4,6 +4,7 @@ import { RestaurantsContext } from "../context/RestaurantsContext";
 import RestaurantFinder from "../apis/RestaurantFinder";
 import Reviews from "./Reviews";
 import AddReview from "./AddReview";
+import StarRating from "./StarRating";
 
 const RestaurantDetail = (props) => {
   const { id } = useParams();
@@ -31,7 +32,9 @@ const RestaurantDetail = (props) => {
           <h1 className="display-1 text-center">
             {selectedRestaurant.restaurant.name}
           </h1>
-
+          <div className="text-center">
+            <StarRating rating={selectedRestaurant.restaurant.average_rating} />
+          </div>
           <div className="mt-3">
             <Reviews reviews={selectedRestaurant.reviews} />
           </div>
